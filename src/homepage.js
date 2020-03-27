@@ -37,7 +37,7 @@ module.exports = function homepage(req, res, next) {
       }
     }
 
-    let rematch_url = game.rematch_url;
+    let rematch_url = path.join(settings.path, game.rematch_url);
     if (+req.query.color === 1) rematch_url += "?color=1"
     else if (+req.query.color === 2) rematch_url += "?color=2"
 
@@ -45,7 +45,7 @@ module.exports = function homepage(req, res, next) {
       .replace(/{ID}/g, req.params.id)
       .replace(/{COLOR}/g, color)
       .replace(/{COLOR_NAME}/g, color == 1 ? "blue" : color == 2 ? "red" : "spectating")
-      .replace(/{WS_URL}/g, `ws://${settings.url}:${PORT}/ws/${req.params.id}`)
+      .replace(/{WS_URL}/g, `ws://${settings.url}:${PORT}${path.join(settings.path, "ws")}/${req.params.id}`)
       .replace(/{REMATCH_URL}/g, color ? rematch_url : "")
     );
   } else {

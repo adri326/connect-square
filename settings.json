@@ -1,3 +1,5 @@
 {
-  "url": "localhost"
+  "url": "localhost",
+  "path": "/",
+  "secret": "hedge skipper"
 }
