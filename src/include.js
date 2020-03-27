@@ -17,8 +17,8 @@ module.exports = function include(app, server) {
     saveUninitialized: false,
   }));
 
-  app.use(path.join(settings.path, "/static/"), new Express.static("./static"));
-  app.use(path.join(settings.path, "/node_modules/"), new Express.static("./node_modules"));
+  app.use(path.join(settings.path, "/static/"), new Express.static(path.join(__dirname, "./static")));
+  app.use(path.join(settings.path, "/node_modules/"), new Express.static(path.join(__dirname, "./node_modules")));
   app.get(path.join(settings.path, "/api/:node"), api);
   app.ws(path.join(settings.path, "/ws/:id"), websocket);
   app.get(path.join(settings.path, "/"), homepage);

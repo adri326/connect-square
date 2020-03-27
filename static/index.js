@@ -3,7 +3,7 @@ function create_game() {
   if (document.getElementById("blue").checked) color = 1;
   else if (document.getElementById("red").checked) color = 2;
   let ulid = ULID.factory();
-  let url = `/${ulid()}?color=${color}`;
+  let url = `./${ulid()}?color=${color}`;
   window.location.href = url;
 }
 
@@ -16,6 +16,6 @@ function join_game() {
       document.getElementById("game-url").className = "";
     }, 100);
   } else {
-    window.location.href = `/${id[0]}`;
+    window.location.href = `./${id[0]}`;
   }
 }
