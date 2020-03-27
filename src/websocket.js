@@ -2,7 +2,7 @@ module.exports = function(ws, req) {
   const game_id = req.params.id;
 
   if (!(/^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{26}$/.exec(game_id))) {
-    console.error("Malformed ID");
+    // console.error("Malformed ID");
     ws.send("Malformed ID");
     ws.terminate();
     return;
@@ -11,14 +11,14 @@ module.exports = function(ws, req) {
   let game = games[game_id];
 
   if (!game) {
-    console.error("Game not found");
+    // console.error("Game not found");
     ws.send("Game not found");
     ws.terminate();
     return;
   }
 
   if (!req.session) {
-    console.error("No session");
+    // console.error("No session");
     ws.send("No session");
     ws.terminate();
     return;
@@ -69,12 +69,12 @@ module.exports = function(ws, req) {
   });
 
   ws.on("close", (msg) => {
-    console.log(`Goodbye player ${player} on game ${game_id}`);
+    // console.log(`Goodbye player ${player} on game ${game_id}`);
     let index = game.sockets.findIndex((x) => x === ws);
     game.sockets.splice(index, 1);
   });
 
   ws.send(JSON.stringify({kind: "update", board: game.board, turn: game.turn, active: game.active}));
 
-  console.log(`Hello player ${player} on game ${game_id}`);
+  // console.log(`Hello player ${player} on game ${game_id}`);
 }

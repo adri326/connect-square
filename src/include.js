@@ -3,7 +3,6 @@ const api = require("./api");
 const homepage = require("./homepage");
 const websocket = require("./websocket");
 const session = require("express-session");
-const http = require("http");
 const path = require("path");
 const ulid = require("ulid");
 
