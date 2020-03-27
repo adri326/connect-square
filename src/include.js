@@ -6,7 +6,8 @@ const session = require("express-session");
 const path = require("path");
 const ulid = require("ulid");
 
-module.exports = function include(app, server) {
+module.exports = function include(app, server, port) {
+  global.PORT = port; // TODO: change this
   let settings = global.settings = require("../settings.json");
   let express_ws = require("express-ws")(app, server);
 
