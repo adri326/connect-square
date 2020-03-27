@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Connect square</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/game.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <script src="node_modules/ulid/dist/index.umd.js"></script>
+    <script src="/static/index.js"></script>
+    <script>
+      const COLOR = {COLOR};
+      const COLOR_NAME = "{COLOR_NAME}";
+      const ID = "{ID}";
+      const WS_URL = "{WS_URL}";
+      const REMATCH_URL = "{REMATCH_URL}";
+    </script>
+    <script src="/static/game.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/"><h1>Connect square</h1></a>
+    </header>
+    <main>
+      <div id="info">
+        Your are:<br />
+        <span class="{COLOR_NAME}">{COLOR_NAME}</span>
+      </div>
+      <div id="canvas-holder">
+        <canvas id="game">
+          Your browser does not support canvases :(
+        </canvas>
+      </div>
+    </main>
+  </body>
+</html>

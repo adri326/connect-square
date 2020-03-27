@@ -1,0 +1,81 @@
+header {
+  height: 8em;
+  box-sizing: border-box;
+}
+
+main {
+  width: 100vw;
+  height: calc(100vh - 8em);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+canvas#game {
+  flex-shrink: 0;
+  --margins: 20em;
+  width: calc(100vw - var(--margins));
+  height: calc(100vw - var(--margins));
+}
+
+#canvas-holder {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#info {
+  flex-grow: 0;
+  height: 2em;
+  max-height: 10vw;
+  text-align: center;
+  padding: 1em;
+  font-size: 1.5rem;
+}
+
+@media (aspect-ratio > 1/1) {
+  main {
+    flex-direction: row;
+    justify-content: stretch;
+  }
+
+  #info {
+    width: 16em;
+    max-width: 20vw;
+    text-align: center;
+  }
+
+  canvas#game {
+    width: calc(100vh - var(--margins));
+    height: calc(100vh - var(--margins));
+  }
+}
+
+@media (width < 600px) or (height < 600px) {
+  header {
+    height: 3em;
+    padding: 0.5em 0.5em;
+  }
+
+  header > h1 {
+    font-size: 1rem;
+  }
+
+  canvas#game {
+    --margins: 4em;
+  }
+
+  main {
+    height: calc(100vh - 3em);
+  }
+}
+
+.red {
+  color: #e8615d;
+}
+
+.blue {
+  color: #4faff7;
+}
