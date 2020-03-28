@@ -6,7 +6,7 @@ let active = false; // waiting for initial update
 let color = INITIAL_COLOR;
 
 const DPR = window.devicePixelRatio || 1;
-ctx.scale(DPR);
+ctx.scale(DPR, DPR);
 
 const CIRCLE_COLOR = "#404040";
 const BOARD_SIZE = 4;
