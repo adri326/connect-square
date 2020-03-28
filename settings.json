@@ -1,6 +1,7 @@
 {
   "url": "localhost",
-  "path": "/a/",
+  "path": "/",
   "secret": "hedge skipper",
-  "port": 8000
+  "port": 8000,
+  "websocket_protocol": "ws"
 }

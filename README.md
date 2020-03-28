@@ -35,6 +35,8 @@ require("express-ws")(app, server);
 require("connect-square")(app, {
   port: 80,
   path: "/connect-square/",
+  url: "localhost",
+  websocket_protocol: "ws",
   secret: "my secret" // used for sessions
 });
 ```

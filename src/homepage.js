@@ -47,7 +47,7 @@ module.exports = function homepage(settings) {
         .replace(/{ID}/g, req.params.id)
         .replace(/{COLOR}/g, color)
         .replace(/{COLOR_NAME}/g, color == 1 ? "blue" : color == 2 ? "red" : "spectating")
-        .replace(/{WS_URL}/g, `ws://${settings.url}:${settings.port}${path.join(settings.path, "ws")}/${req.params.id}`)
+        .replace(/{WS_URL}/g, `${settings.websocket_protocol || "ws"}://${settings.url}:${settings.port}${path.join(settings.path, "ws")}/${req.params.id}`)
         .replace(/{REMATCH_URL}/g, color ? rematch_url : "")
         .replace(/{PATH}/g, settings.path)
       );
