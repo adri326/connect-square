@@ -27,7 +27,22 @@ module.exports = function(ws, req) {
   let player = 0;
 
   if (req.session.games && req.session.games.find(([id]) => id === game.id)) {
-    player = req.session.games.find(([id]) => id === game.id)[1];
+    let reg = req.session.games.find(([id]) => id === game.id);
+    console.log(reg);
+    if (!game.player_a && reg[1] === 0) {
+      game.player_a = req.session;
+      player = reg[1] = game.player_a_color;
+      ws.send(JSON.stringify({kind: "joined_as", color: player}));
+      req.session.save(console.error);
+    } else if (!game.player_b && reg[1] === 0) {
+      game.player_b = req.session;
+      player = reg[1] = 3 - game.player_a_color;
+      ws.send(JSON.stringify({kind: "joined_as", color: player}));
+      req.session.save(console.error);
+    } else {
+      player = reg[1];
+    }
+    console.log(reg);
   }
 
   game.sockets.push(ws);

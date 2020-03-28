@@ -10,8 +10,7 @@
     <script src="node_modules/ulid/dist/index.umd.js"></script>
     <script src="./static/index.js"></script>
     <script>
-      const COLOR = {COLOR};
-      const COLOR_NAME = "{COLOR_NAME}";
+      const INITIAL_COLOR = {COLOR};
       const ID = "{ID}";
       const WS_URL = "{WS_URL}";
       const REMATCH_URL = "{REMATCH_URL}";
@@ -20,11 +19,11 @@
   </head>
   <body>
     <header>
-      <a href="/"><h1>Connect square</h1></a>
+      <a href="{PATH}"><h1>Connect square</h1></a>
     </header>
     <main>
       <div id="info">
-        Your are:<br />
+        You are:<br />
         <span class="{COLOR_NAME}">{COLOR_NAME}</span>
       </div>
       <div id="canvas-holder">

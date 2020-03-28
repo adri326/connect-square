@@ -3,10 +3,10 @@
 const ulid = require("ulid");
 
 module.exports = class Game {
-  constructor(id, color, session) {
+  constructor(id, color) {
     this.id = id;
     this.player_a_color = color;
-    this.player_a = session;
+    this.player_a = null;
     this.player_b = null;
     this.turn = 1;
     this.board = new Array(7).fill(0).map(x => new Array(4).fill(0));
@@ -14,12 +14,6 @@ module.exports = class Game {
     this.active = true;
     this.size = 4;
     this.rematch_url = ulid.ulid();
-
-    if (session.games) {
-      session.games.push([id, color]);
-    } else {
-      session.games = [[id, color]];
-    }
   }
 
   play(x, y, player) {

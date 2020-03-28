@@ -17,23 +17,24 @@ module.exports = function homepage(req, res, next) {
 
     let game = games[req.params.id];
     if (!game) {
-      game = games[req.params.id] = new Game(req.params.id, color, req.session);
+      game = games[req.params.id] = new Game(req.params.id, color);
+      if (req.session.games) {
+        req.session.games.push([req.params.id, 0]);
+      } else {
+        req.session.games = [[req.params.id, 0]];
+      }
     } else {
       if (req.session.games) {
         console.log(req.session.games);
         let reg = req.session.games.find(([id]) => id === game.id);
-        if (!reg) color = 0;
-        else color = reg[1];
-      } else color = 0;
-
-      if (!game.player_b && (!req.session.games || !req.session.games.find(([id]) => id === game.id))) {
-        color = 3 - game.player_a_color;
-        game.player_b = req.session;
-        if (req.session.games) {
-          req.session.games.push([game.id, color]);
-        } else {
-          req.session.games = [[game.id, color]];
+        if (!reg) {
+          req.session.games.push([game.id, 0]);
+          color = 0;
         }
+        else color = reg[1];
+      } else {
+        req.session.games = [[game.id, 0]];
+        color = 0;
       }
     }
 
@@ -47,6 +48,7 @@ module.exports = function homepage(req, res, next) {
       .replace(/{COLOR_NAME}/g, color == 1 ? "blue" : color == 2 ? "red" : "spectating")
       .replace(/{WS_URL}/g, `ws://${settings.url}:${PORT}${path.join(settings.path, "ws")}/${req.params.id}`)
       .replace(/{REMATCH_URL}/g, color ? rematch_url : "")
+      .replace(/{PATH}/g, settings.path)
     );
   } else {
     res.write(index_src);

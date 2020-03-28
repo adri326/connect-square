@@ -3,6 +3,7 @@ let canvas = document.getElementById("game");
 let ctx = canvas.getContext("2d");
 let turn = 0;
 let active = false; // waiting for initial update
+let color = INITIAL_COLOR;
 
 const CIRCLE_COLOR = "#404040";
 const BOARD_SIZE = 4;
@@ -34,7 +35,7 @@ function draw_game() {
         let to = get_pos(x + 1, y);
         let mouse_over = mouse_pos[0] >= from[0] && mouse_pos[0] <= to[0]
           && mouse_pos[1] >= from[1] - line_width / 2 && mouse_pos[1] <= from[1] + line_width / 2;
-        ctx.fillStyle = (mouse_over && turn === COLOR && active ? COLORS_HOVER : COLORS)[board[y * 2][x]];
+        ctx.fillStyle = (mouse_over && turn === color && active ? COLORS_HOVER : COLORS)[board[y * 2][x]];
         ctx.fillRect(from[0], from[1] - line_width / 2, to[0] - from[0], line_width);
       }
       if (y != BOARD_SIZE - 1) {
@@ -42,7 +43,7 @@ function draw_game() {
         let to = get_pos(x, y + 1);
         let mouse_over = mouse_pos[1] >= from[1] && mouse_pos[1] <= to[1]
           && mouse_pos[0] >= from[0] - line_width / 2 && mouse_pos[0] <= from[0] + line_width / 2;
-        ctx.fillStyle = (mouse_over && turn === COLOR && active ? COLORS_HOVER : COLORS)[board[y * 2 + 1][x]];
+        ctx.fillStyle = (mouse_over && turn === color && active ? COLORS_HOVER : COLORS)[board[y * 2 + 1][x]];
         ctx.fillRect(from[0] - line_width / 2, from[1], line_width, to[1] - from[1]);
       }
     }
@@ -69,14 +70,14 @@ canvas.onmousemove = function onmousemove(event) {
 }
 
 canvas.onclick = function onclick(event) {
-  if (!active || turn !== COLOR) return;
+  if (!active || turn !== color) return;
   let mouse_x = event.clientX - canvas.offsetLeft;
   let mouse_y = event.clientY - canvas.offsetTop;
   mouse_pos = [mouse_x, mouse_y];
 
   function put(x, y) {
     turn = 3 - turn;
-    board[y][x] = COLOR;
+    board[y][x] = color;
     socket.send(JSON.stringify({
       kind: "turn",
       pos: [x, y]
@@ -84,7 +85,7 @@ canvas.onclick = function onclick(event) {
     console.log([x, y]);
   }
 
-  if (turn === COLOR) {
+  if (turn === color) {
     for (let y = 0; y < BOARD_SIZE; y++) {
       for (let x = 0; x < BOARD_SIZE; x++) {
         if (x != BOARD_SIZE - 1) {
@@ -191,12 +192,19 @@ socket.addEventListener("message", (event) => {
       }
     }
     update_gui();
+  } else if (msg.kind === "joined_as") {
+    color = msg.color;
+    let color_name = color === 1 ? "blue" : "red";
+    document.getElementById("info").innerHTML = `
+      You are:<br />
+      <span class="${color_name}">${color_name}</span>
+    `;
   }
 });
 
 function update_gui() {
   if (!active) {
-    if (COLOR) {
+    if (color) {
       let info = document.getElementById("info");
       if (info.className != "rematch") {
         info.className = "rematch";
