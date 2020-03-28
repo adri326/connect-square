@@ -28,7 +28,7 @@ function draw_game() {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  circle_radius = canvas.width > (BOARD_SIZE * 100) ? 32 : 16;
+  circle_radius = canvas.width > (BOARD_SIZE * 100) ? 32 : 24;
   line_width = circle_radius / Math.sqrt(2) * 2;
 
   for (let y = 0; y < BOARD_SIZE; y++) {
@@ -67,15 +67,17 @@ function draw_game() {
 window.onresize = draw_game;
 
 canvas.onmousemove = function onmousemove(event) {
-  let mouse_x = (event.clientX - canvas.offsetLeft) / DPR;
-  let mouse_y = (event.clientY - canvas.offsetTop) / DPR;
+  let rect = canvas.getBoundingClientRect();
+  let mouse_x = (event.clientX - rect.left) * DPR;
+  let mouse_y = (event.clientY - rect.top) * DPR;
   mouse_pos = [mouse_x, mouse_y];
 }
 
 canvas.onclick = function onclick(event) {
   if (!active || turn !== color) return;
-  let mouse_x = (event.clientX - canvas.offsetLeft) / DPR;
-  let mouse_y = (event.clientY - canvas.offsetTop) / DPR;
+  let rect = canvas.getBoundingClientRect();
+  let mouse_x = (event.clientX - rect.left) * DPR;
+  let mouse_y = (event.clientY - rect.top) * DPR;
   mouse_pos = [mouse_x, mouse_y];
 
   function put(x, y) {

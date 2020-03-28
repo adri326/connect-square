@@ -1,4 +1,4 @@
-module.exports = function websocket(settings) {
+module.exports = function websocket(settings, games) {
   return function(ws, req) {
     const game_id = req.params.id;
 
@@ -33,15 +33,19 @@ module.exports = function websocket(settings) {
         game.player_a = req.session;
         player = reg[1] = game.player_a_color;
         ws.send(JSON.stringify({kind: "joined_as", color: player}));
-        req.session.save(console.error);
+        req.session.save((err) => err ? console.error(err) : null);
       } else if (!game.player_b && reg[1] === 0) {
         game.player_b = req.session;
         player = reg[1] = 3 - game.player_a_color;
         ws.send(JSON.stringify({kind: "joined_as", color: player}));
-        req.session.save(console.error);
+        req.session.save((err) => err ? console.error(err) : null);
       } else {
         player = reg[1];
       }
+    } else {
+      ws.send("No game entered/spectated: no cookie?");
+      ws.terminate();
+      return;
     }
 
     game.sockets.push(ws);

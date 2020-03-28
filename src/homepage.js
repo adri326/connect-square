@@ -5,7 +5,7 @@ const Game = require("./game");
 let index_src = fs.readFileSync(path.join(__dirname, "../html/index.html"), "utf8");
 let game_src = fs.readFileSync(path.join(__dirname, "../html/game.html"), "utf8");
 
-module.exports = function homepage(settings) {
+module.exports = function homepage(settings, games) {
   // handles {PATH}/[:id]
   return function(req, res, next) {
     if (req.params.id) {
@@ -25,17 +25,20 @@ module.exports = function homepage(settings) {
         } else {
           req.session.games = [[req.params.id, 0]];
         }
+        req.session.save((err) => err ? console.error(err) : null);
       } else {
         if (req.session.games) {
           let reg = req.session.games.find(([id]) => id === game.id);
           if (!reg) {
             req.session.games.push([game.id, 0]);
             color = 0;
+            req.session.save((err) => err ? console.error(err) : null);
           }
           else color = reg[1];
         } else {
           req.session.games = [[game.id, 0]];
           color = 0;
+          req.session.save((err) => err ? console.error(err) : null);
         }
       }
 

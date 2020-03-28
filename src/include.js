@@ -14,11 +14,11 @@ module.exports = function include(app, settings) {
     saveUninitialized: false,
   }));
 
+  let games = {};
+
   app.use(path.join(settings.path, "/static/"), new Express.static(path.join(__dirname, "../static")));
   app.get(path.join(settings.path, "/api/:node"), api(settings));
-  app.ws(path.join(settings.path, "/ws/:id"), websocket(settings));
-  app.get(path.join(settings.path, "/"), homepage(settings));
-  app.get(path.join(settings.path, "/:id"), homepage(settings));
-
-  global.games = {};
+  app.ws(path.join(settings.path, "/ws/:id"), websocket(settings, games));
+  app.get(path.join(settings.path, "/"), homepage(settings, games));
+  app.get(path.join(settings.path, "/:id"), homepage(settings, games));
 }
