@@ -4,12 +4,15 @@ const http = require("http");
 let settings = global.settings = require("../settings.json");
 
 if (typeof module !== 'undefined' && !module.parent) {
+  let settings = require("../settings.json");
   let app = new Express();
   let server = http.createServer(app);
 
-  require("./include")(app, server, 8000);
+  let express_ws = require("express-ws")(app, server);
 
-  server.listen(PORT);
+  require("./include")(app, settings);
+
+  server.listen(settings.port);
 } else {
   module.exports = require("./include");
 }

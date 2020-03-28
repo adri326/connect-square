@@ -1,5 +1,6 @@
 {
   "url": "localhost",
-  "path": "/",
-  "secret": "hedge skipper"
+  "path": "/a/",
+  "secret": "hedge skipper",
+  "port": 8000
 }
