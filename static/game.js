@@ -5,6 +5,9 @@ let turn = 0;
 let active = false; // waiting for initial update
 let color = INITIAL_COLOR;
 
+const DPR = window.devicePixelRatio || 1;
+ctx.scale(DPR);
+
 const CIRCLE_COLOR = "#404040";
 const BOARD_SIZE = 4;
 const COLORS = ["#e0e0e0", "#4faff7", "#e8615d", "#96d1ff", "#ff9e9c"];
@@ -19,8 +22,8 @@ function get_pos(x, y) {
 
 function draw_game() {
   if (canvas.width != canvas.clientWidth || canvas.height != canvas.clientHeight) {
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+    canvas.width = canvas.clientWidth * DPR;
+    canvas.height = canvas.clientHeight * DPR;
   }
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
