@@ -67,15 +67,15 @@ function draw_game() {
 window.onresize = draw_game;
 
 canvas.onmousemove = function onmousemove(event) {
-  let mouse_x = event.clientX - canvas.offsetLeft;
-  let mouse_y = event.clientY - canvas.offsetTop;
+  let mouse_x = (event.clientX - canvas.offsetLeft) / DPR;
+  let mouse_y = (event.clientY - canvas.offsetTop) / DPR;
   mouse_pos = [mouse_x, mouse_y];
 }
 
 canvas.onclick = function onclick(event) {
   if (!active || turn !== color) return;
-  let mouse_x = event.clientX - canvas.offsetLeft;
-  let mouse_y = event.clientY - canvas.offsetTop;
+  let mouse_x = (event.clientX - canvas.offsetLeft) / DPR;
+  let mouse_y = (event.clientY - canvas.offsetTop) / DPR;
   mouse_pos = [mouse_x, mouse_y];
 
   function put(x, y) {
