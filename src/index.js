@@ -1,8 +1,6 @@
 const Express = require("express");
 const http = require("http");
 
-let settings = global.settings = require("../settings.json");
-
 if (typeof module !== 'undefined' && !module.parent) {
   let settings = require("../settings.json");
   let app = new Express();
